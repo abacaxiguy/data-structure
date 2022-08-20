@@ -2,27 +2,28 @@
 #include <string.h>
 #include <ctype.h>
 
-int eh_minusculo(char letra)
+int eh_maiusculo(char letra)
 {
-    if (letra >= 'a' && letra <= 'z') return 1;
+    if (letra >= 'A' && letra <= 'Z') return 1;
     else return 0;
 }
 
-int tem_numero(char palavra[])
+int so_letras(char palavra[])
 {
-    for (int i = 0; i < strlen(palavra); i++){
-        if (palavra[i] >= '0' && palavra[i] <= '9') return 1;
+    for (int i = 1; i < strlen(palavra); i++){
+        if (palavra[i] >= 'a' && palavra[i] <= 'z') continue;
+        else return 0;
     }
 
-    return 0;
+    return 1;
 }
 
 int verificar_nome(char nome[])
 {
     if (strlen(nome) < 1) return 0;
-    else if (eh_minusculo(nome[0])) return 0;
+    else if (!eh_maiusculo(nome[0])) return 0;
     else if (nome[0] == ' ') return 0;
-    else if (tem_numero(nome)) return 0;
+    else if (!so_letras(nome)) return 0;
     else return 1;
 }
 
