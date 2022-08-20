@@ -7,7 +7,7 @@ int so_numeros(char numero[])
 {
     for (int i = 0; i < strlen(numero); i++){
         if (numero[i] < '0' || numero[i] > '9'){
-            if (numero[i] != ',' && numero[i] != '.' && numero[i] != '-') return 0;
+            if (numero[i] != ',' && numero[i] != '.' && numero[i] != '-' && numero[i] != '+') return 0;
         }
     }
 
@@ -47,7 +47,7 @@ int main(){
         return 0;
     }
 
-    if (numero[0] >= '0' && numero[0] <= '9') {
+    if ((numero[0] >= '0' && numero[0] <= '9') || numero[0] == '+') {
         if (tem_virgula(numero)){
             if (formato_real(numero)) printf("Real\n");
             else (printf("Numero invalido\n"));
