@@ -203,8 +203,8 @@ int main(){
     char numero[10];
     scanf("%[^\n]", numero);
 
-    if (!so_numeros(numero) || strlen(numero) > 9) {
-        printf("Numero invalido\n");
+    if (!so_numeros(numero) || strlen(numero) > 9 || strlen(numero) < 1) {
+        printf("Numero inválido\n");
         return 0;
     }
 
@@ -216,7 +216,7 @@ int main(){
 
     if (tem_virgula(numero)){
         if (!formato_real(numero)) {
-            printf("Numero invalido\n");
+            printf("Numero inválido\n");
             return 0;
         }
 
