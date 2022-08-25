@@ -98,25 +98,65 @@ int Remover(ListaEstatica *lista, Elem *elem) {
     return 1;
 }
 
+int RemoverTodas(ListaEstatica *lista, Elem *elem){
+    int pos = Pesquisar(*lista, elem->nome);
+    if (pos < 0) return 0;
+
+    while (pos >= 0){
+        *elem = lista->elementos[pos];
+
+        for (int i = pos; i < lista->quantidade; ++i)
+            lista->elementos[i] = lista->elementos[i + 1];
+
+        lista->quantidade--;
+
+        pos = Pesquisar(*lista, elem->nome);
+    }
+
+    return 1;
+}
+
+int ContarElementos(ListaEstatica lista, Elem *elem){
+    int cont = 0;
+    for (int i = 0; i < lista.quantidade; ++i){
+        if (strcmp(lista.elementos[i].nome, elem->nome) == 0) cont++;
+    }
+    return cont;
+}
+
+int ConcatenaLista(ListaEstatica *lista, ListaEstatica *lista2){};
+
+int InverteLista(ListaEstatica *lista){
+    if (Vazia(*lista)) return 0;
+    if (lista->quantidade == 1) return 1;
+
+    for (int i = 0; i < lista->quantidade / 2; ++i){
+        Elem aux = lista->elementos[i];
+        lista->elementos[i] = lista->elementos[(lista->quantidade - i) - 1];
+        lista->elementos[(lista->quantidade - i) - 1] = aux;
+    }
+
+    return 1;
+}
+
 int main(){
     ListaEstatica lista;
     Elem elem;
     Criar(&lista, 5);
     InserirInicio(&lista, (Elem){"Joao", 20});
-    InserirInicio(&lista, (Elem){"Maria", 25});
+    InserirInicio(&lista, (Elem){"Joao", 20});
     InserirFinal(&lista, (Elem){"Pedro", 30});
-    InserirFinal(&lista, (Elem){"Ana", 35});
+    InserirFinal(&lista, (Elem){"Joao", 20});
     InserirFinal(&lista, (Elem){"José", 40});
     Imprimir(&lista);
     printf("\n");
-    RemoverInicio(&lista, &elem);
+    InverteLista(&lista);
     Imprimir(&lista);
     printf("\n");
-    RemoverFim(&lista, &elem);
+    elem = (Elem){"Joao", 20};
+    RemoverTodas(&lista, &elem);
     Imprimir(&lista);
     printf("\n");
-    Remover(&lista, &elem);
-    Imprimir(&lista);
-    printf("\n");
+
     return 0;
 }
