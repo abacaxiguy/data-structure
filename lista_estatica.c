@@ -124,7 +124,14 @@ int ContarElementos(ListaEstatica lista, Elem *elem){
     return cont;
 }
 
-int ConcatenaLista(ListaEstatica *lista, ListaEstatica *lista2){};
+int ConcatenaLista(ListaEstatica *lista, ListaEstatica *lista2){
+    if (lista->quantidade + lista2->quantidade > lista->tamanho) return 0;
+
+    for (int i = 0; i < lista2->quantidade; ++i)
+        lista->elementos[lista->quantidade++] = lista2->elementos[i];
+
+    return 1;
+}
 
 int InverteLista(ListaEstatica *lista){
     if (Vazia(*lista)) return 0;
@@ -142,7 +149,7 @@ int InverteLista(ListaEstatica *lista){
 int main(){
     ListaEstatica lista;
     Elem elem;
-    Criar(&lista, 5);
+    Criar(&lista, 10);
     InserirInicio(&lista, (Elem){"Joao", 20});
     InserirInicio(&lista, (Elem){"Joao", 20});
     InserirFinal(&lista, (Elem){"Pedro", 30});
@@ -155,6 +162,16 @@ int main(){
     printf("\n");
     elem = (Elem){"Joao", 20};
     RemoverTodas(&lista, &elem);
+    Imprimir(&lista);
+    printf("\n");
+
+    ListaEstatica lista2;
+    Criar(&lista2, 5);
+    InserirInicio(&lista2, (Elem){"Joao", 20});
+    InserirInicio(&lista2, (Elem){"Pedro", 20});
+    Imprimir(&lista2);
+    printf("\n");
+    ConcatenaLista(&lista, &lista2);
     Imprimir(&lista);
     printf("\n");
 
