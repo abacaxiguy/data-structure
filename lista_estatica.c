@@ -146,34 +146,107 @@ int InverteLista(ListaEstatica *lista){
     return 1;
 }
 
+int OrdenaLista(ListaEstatica *lista){
+    if (Vazia(*lista)) return 0;
+    if (lista->quantidade == 1) return 1;
+    
+    for (int i = 0; i < lista->quantidade; ++i){
+        for (int j = 0; j < lista->quantidade - 1; ++j){
+            int cont = 0;
+            while ((lista->elementos[j].nome[cont] == lista->elementos[j+1].nome[cont]) == 1) cont++;
+            if (lista->elementos[j].nome[cont] > lista->elementos[j+1].nome[cont])
+            {
+                Elem aux = lista->elementos[j];
+                lista->elementos[j] = lista->elementos[j+1];
+                lista->elementos[j+1] = aux;
+            }
+        }
+    }
+    return 1;
+}
+
+ListaEstatica ConcatenaOrdenando(ListaEstatica *lista, ListaEstatica *lista2){
+    ListaEstatica lista3;
+    Criar(&lista3, lista->quantidade + lista2->quantidade);
+    int i = 0, j = 0;
+
+    while (i < lista->quantidade && j < lista2->quantidade){
+        int maior = 0;
+
+        while ((lista->elementos[i].nome[maior] == lista2->elementos[j].nome[maior]) == 1) maior++;
+
+        if (lista->elementos[i].nome[maior] > lista2->elementos[j].nome[maior])
+            InserirFinal(&lista3, lista->elementos[i++]);
+        else
+            InserirFinal(&lista3, lista2->elementos[j++]);
+    }
+
+    while (i < lista->quantidade)
+        InserirFinal(&lista3, lista->elementos[i++]);
+
+    while (j < lista2->quantidade)
+        InserirFinal(&lista3, lista2->elementos[j++]);
+        
+
+    return lista3;
+}
+
 int main(){
+    // ListaEstatica lista;
+    // Elem elem;
+    // Criar(&lista, 10);
+    // InserirInicio(&lista, (Elem){"Joao", 20});
+    // InserirInicio(&lista, (Elem){"Joao", 20});
+    // InserirFinal(&lista, (Elem){"Pedro", 30});
+    // InserirFinal(&lista, (Elem){"Joao", 20});
+    // InserirFinal(&lista, (Elem){"José", 40});
+    // Imprimir(&lista);
+    // printf("\n");
+    // InverteLista(&lista);
+    // Imprimir(&lista);
+    // printf("\n");
+    // elem = (Elem){"Joao", 20};
+    // RemoverTodas(&lista, &elem);
+    // Imprimir(&lista);
+    // printf("\n");
+
+    // ListaEstatica lista2;
+    // Criar(&lista2, 5);
+    // InserirInicio(&lista2, (Elem){"Joao", 20});
+    // InserirInicio(&lista2, (Elem){"Pedro", 20});
+    // Imprimir(&lista2);
+    // printf("\n");
+    // ConcatenaLista(&lista, &lista2);
+    // Imprimir(&lista);
+    // printf("\n");
+
     ListaEstatica lista;
-    Elem elem;
     Criar(&lista, 10);
     InserirInicio(&lista, (Elem){"Joao", 20});
-    InserirInicio(&lista, (Elem){"Joao", 20});
-    InserirFinal(&lista, (Elem){"Pedro", 30});
-    InserirFinal(&lista, (Elem){"Joao", 20});
+    InserirInicio(&lista, (Elem){"Pedro", 30});
     InserirFinal(&lista, (Elem){"José", 40});
-    Imprimir(&lista);
-    printf("\n");
-    InverteLista(&lista);
-    Imprimir(&lista);
-    printf("\n");
-    elem = (Elem){"Joao", 20};
-    RemoverTodas(&lista, &elem);
+    InserirFinal(&lista, (Elem){"Maria", 16});
     Imprimir(&lista);
     printf("\n");
 
     ListaEstatica lista2;
-    Criar(&lista2, 5);
-    InserirInicio(&lista2, (Elem){"Joao", 20});
-    InserirInicio(&lista2, (Elem){"Pedro", 20});
+    Criar(&lista2, 10);
+    InserirInicio(&lista2, (Elem){"Jaime", 10});
+    InserirInicio(&lista2, (Elem){"Lucas", 50});
+    InserirFinal(&lista2, (Elem){"Ryan", 20});
     Imprimir(&lista2);
     printf("\n");
-    ConcatenaLista(&lista, &lista2);
+
+    OrdenaLista(&lista);
     Imprimir(&lista);
     printf("\n");
+
+    OrdenaLista(&lista2);
+    Imprimir(&lista2);
+    printf("\n");
+
+    ListaEstatica lista3 = ConcatenaOrdenando(&lista, &lista2);
+    Imprimir(&lista3);
 
     return 0;
 }
