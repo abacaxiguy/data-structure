@@ -7,7 +7,6 @@ typedef struct Elem {
     struct Elem *prox;
 } Elem;
 
-// cria função para criar a lista
 Elem *Criar(int info){
     Elem *novo = malloc(sizeof(Elem));
     novo->info = info;
@@ -36,6 +35,23 @@ Elem *InserirFinal(Elem *lista, int info){
     return lista;
 }
 
+Elem *RemoverInicio(Elem *lista){
+    if (Vazia(lista)) return NULL;
+    Elem *temp = lista->prox;
+    free(lista);
+    return temp;
+}
+
+int RemoverFinal(Elem *lista){
+    if (Vazia(lista)) return 0;
+    if ((lista->prox)->prox == NULL) {
+        free(lista->prox);
+        lista->prox = NULL;
+        return 1;
+    }
+    else RemoverFinal(lista->prox);
+}
+
 int Busca(Elem *lista, int info){
     if (Vazia(lista)) return 0;
     else if (lista->info == info) return 1;
@@ -61,6 +77,12 @@ int main(){
     Vazia(lista) ? printf("Lista vazia\n") : printf("Lista com elementos\n");
     Quantidade(lista) ? printf("Lista com %d elementos\n", Quantidade(lista)) : printf("Lista vazia\n");
     Busca(lista, 3) ? printf("Elemento 3 encontrado\n") : printf("Elemento 3 não encontrado\n");
-
+    
+    lista = RemoverInicio(lista);
+    Imprimir(lista);
+    printf("\n");
+    RemoverFinal(lista) ? printf("Elemento removido\n") : printf("Lista vazia\n");
+    Imprimir(lista);
+    
     return 0;
 }
