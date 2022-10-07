@@ -41,4 +41,6 @@ int main(){
         i == 99 ? printf("%d", lista[i]) : printf("%d, ", lista[i]);
     }
     printf("]\n");
+
+    return 0;
 }
