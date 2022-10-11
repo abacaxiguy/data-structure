@@ -40,7 +40,7 @@ int main(){
 
     printf("[");
     for (int i = 0; i < 2000; i++){
-        i == 99 ? printf("%d", lista[i]) : printf("%d, ", lista[i]);
+        i == 1999 ? printf("%d", lista[i]) : printf("%d, ", lista[i]);
     }
     printf("]\n");
 
