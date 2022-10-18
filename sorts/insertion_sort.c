@@ -23,4 +23,6 @@ int main(){
         i == 1999 ? printf("%d", lista[i]) : printf("%d, ", lista[i]);
     }
     printf("]\n");
+
+    return 0;
 }
