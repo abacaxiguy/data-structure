@@ -46,4 +46,12 @@ void add_neighbor(graph *g, char vortex)
     }
 }
 
-void print_graph(graph *g);
+void print_graph(graph *g){
+    int i = 0;
+    printf("%c -> ", g->vortex);
+    while (g->neighbors[i] != NULL) {
+        printf("%c ", g->neighbors[i]->info);
+        i++;
+    }
+    printf("\n");
+}
