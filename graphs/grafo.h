@@ -1,57 +1,68 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct node {
-    char info;
-    struct node *next;
-} node;
+#define MAX 100
 
-typedef struct graph{
-    char vortex;
-    node **neighbors;
-} graph;
+typedef struct {
+    int v[MAX][MAX];
+    int n;
+} Graph;
 
-node *create_linked_list(char info){
-    node *list = (node *) malloc(sizeof(node));
-    list->info = info;
-    list->next = NULL;
+Graph createGraph();
 
-    return list;
+void addEdge(Graph *g, int v1, int v2);
+
+int adjacent(Graph g, int v1, int v2);
+
+int getAdjacentVertices(Graph g, int vertex, int *output);
+
+void dropGraph(Graph *g);
+
+void printGraph(Graph g);
+
+Graph createGraph() {
+    Graph g;
+    g.n = 0;
+    int i, j;
+    for (i = 0; i < MAX; i++)
+        for (j = 0; j < MAX; j++)
+            g.v[i][j] = 0;
+    return g;
 }
 
-node *add_linked_list(node *list, char info){
-    if (list == NULL) return create_linked_list(info);
-    list->next = add_linked_list(list->next, info);
-
-    return list;
-}
-
-graph *create_graph(char vortex)
-{
-    graph *g = (graph *) malloc(sizeof(graph));
-    g->vortex = vortex;
-    g->neighbors = NULL;
-}
-
-void add_neighbor(graph *g, char vortex)
-{
-    if (g->neighbors == NULL) {
-        g->neighbors = (node **) malloc(sizeof(node *));
-        g->neighbors[0] = create_linked_list(vortex);
-    } else {
-        int i = 0;
-        while (g->neighbors[i] != NULL) i++;
-        g->neighbors = (node **) realloc(g->neighbors, (i + 1) * sizeof(node *));
-        g->neighbors[i] = create_linked_list(vortex);
+void addEdge(Graph *g, int v1, int v2) {
+    if (v1 >= 0 && v1 < MAX && v2 >= 0 && v2 < MAX) {
+        g->v[v1][v2] = 1;
+        if (v1 != v2)
+            g->v[v2][v1] = 1;
     }
 }
 
-void print_graph(graph *g){
-    int i = 0;
-    printf("%c -> ", g->vortex);
-    while (g->neighbors[i] != NULL) {
-        printf("%c ", g->neighbors[i]->info);
-        i++;
+int adjacent(Graph g, int v1, int v2) {
+    if (v1 >= 0 && v1 < MAX && v2 >= 0 && v2 < MAX)
+        return g.v[v1][v2];
+    return 0;
+}
+
+int getAdjacentVertices(Graph g, int vertex, int *output) {
+    if (vertex < 0 || vertex >= MAX)
+        return 0;
+    int i, total = 0;
+    for (i = 0; i < MAX; i++)
+        if (g.v[vertex][i] == 1)
+            output[total++] = i;
+    return total;
+}
+
+void dropGraph(Graph *g) {
+    g->n = 0;
+}
+
+void printGraph(Graph g) {
+    int i, j;
+    for (i = 0; i < MAX; i++) {
+        for (j = 0; j < MAX; j++)
+            printf("%d ", g.v[i][j]);
+        printf("\n\n");
     }
-    printf("\n");
 }
